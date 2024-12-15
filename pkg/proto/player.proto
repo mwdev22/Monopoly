@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package monopoly;
+
+option go_package = "pkg/proto/";
+
+service User {
+    rpc SignUp(SignUpRequest) returns (SignUpResponse);
+    rpc GetUser(GetUserRequest) returns (UserResponse);
+}
+
+message SignUpRequest {
+    string email = 1;
+    string password = 2;
+    string name = 3;
+}
+
+message SignUpResponse {
+    string user_id = 1;
+}
+
+message UserResponse {
+    string user_id = 1;
+    string email = 2;
+    string name = 3;
+}
+
+message GetUserRequest {
+    string user_id = 1;
+}

@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package monopoly;
+
+option go_package = "pkg/proto/";
+
+service GameService {
+    rpc StartGame (StartGameRequest) returns (StartGameResponse);
+    rpc JoinGame (JoinGameRequest) returns (JoinGameResponse);
+    rpc GetGameState (GetGameStateRequest) returns (GameState);
+    rpc MakeMove (MakeMoveRequest) returns (MakeMoveResponse);
+}
+
+message StartGameRequest {
+    repeated string player_ids = 1;
+}
+
+message StartGameResponse {
+    string game_id = 1;
+}
+
+message JoinGameRequest {
+    string player_id = 1;
+    string game_id = 2;
+}
+
+message JoinGameResponse {
+    string status = 1;
+    string message = 2;
+}
+
+message GetGameStateRequest {
+    string game_id = 1;
+}
+
+message GameState {
+    string game_id = 1;
+    map<string, string> players = 2; // Player ID -> Player State (e.g., position, money)
+    string current_player = 3; // Current player's turn
+    string game_status = 4; // Game status (e.g., ongoing, finished)
+}
+
+message MakeMoveRequest {
+    string player_id = 1;
+    string game_id = 2;
+    int32 dice_roll = 3; // Dice roll result
+}
+
+message MakeMoveResponse {
+    string status = 1;
+    string message = 2;
+    string game_state = 3; // Updated game state after the move
+}
